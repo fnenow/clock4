@@ -18,7 +18,7 @@ router.post('/login', async (req, res) => {
 // List currently clocked-in (not clocked-out) sections
 router.get('/clocked-out', async (req, res) => {
   const q = await pool.query(`
-    SELECT 
+    SELECT DISTINCT
       cin.worker_id,
       cin.project_id,
       w.name as worker_name,
@@ -62,7 +62,7 @@ router.get('/clocked-out', async (req, res) => {
 // List clocked-out sections
 router.get('/clocked-out', async (req, res) => {
   const q = await pool.query(`
-    SELECT 
+    SELECT DISTINCT
       cin.worker_id,
       cin.project_id,
       w.name as worker_name,
