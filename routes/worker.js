@@ -67,12 +67,12 @@ router.delete('/:worker_id', async (req, res) => {
 router.get('/projects/:worker_id', async (req, res) => {
   const { worker_id } = req.params;
   const q = await pool.query(
-    `SELECT p.* FROM projects p
-     JOIN project_workers pw ON p.id = pw.project_id
-     WHERE pw.worker_id=$1 AND (p.hidden IS FALSE OR p.hidden IS NULL)`,
-    [worker_id]
-  );
-  res.json(q.rows);
+  `SELECT DISTINCT p.* FROM projects p
+   JOIN project_workers pw ON p.id = pw.project_id
+   WHERE pw.worker_id=$1 AND (p.hidden IS FALSE OR p.hidden IS NULL)`,
+  [worker_id]
+);
+res.json(q.rows);
 });
 
 // Assign worker to project
